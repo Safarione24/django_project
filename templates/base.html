@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Мой сайт{% endblock %}</title>
+</head>
+<body>
+    <header>
+        <h1><a href="{% url 'index' %}"> </a></h1>
+        <nav>
+            <a href="{% url 'create_category' %}">+ Создать категорию</a>
+        </nav>
+        <hr>
+    </header>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    <footer><hr></footer>
+</body>
+</html>

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Создать товар{% endblock %}
+
+{% block content %}
+    <h2>Создать новый товар</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }} 
+        <button type="submit">Сохранить товар</button>
+    </form>
+    <a href="{% url 'index' %}">← На главную</a>
+{% endblock %}

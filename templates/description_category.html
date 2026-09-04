@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block title %} 
+ПОдробнее 
+{% endblock %}
+
+{% block content %}
+
+<div >
+        <h1>{{ category.name }}</h1>
+        <p>{{ category.descriprion }}</p>
+</div>
+
+{% endblock %}
