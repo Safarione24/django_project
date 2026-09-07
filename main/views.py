@@ -1,5 +1,6 @@
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
+from django.db.models import Q  # ДОБАВЛЕН ИМПОРТ Q
 from .models import Category, Product
 from .forms import CategoryForm, ProductForm 
 
@@ -45,28 +46,38 @@ class ProductDetailView(DetailView):
     context_object_name = 'product'      
     pk_url_kwarg = 'product_id'           
 
-class CategoryUpdateView(UpdateView):  # Исправлено имя класса (было CategoryUpdatelView)
+class CategoryUpdateView(UpdateView):
     model = Category
     form_class = CategoryForm
-    template_name = 'create_category.html'  # Исправлено (было 'category_category.html')
-    success_url = reverse_lazy('list_category')  # Исправлено (было 'list_categories')
+    template_name = 'create_category.html'
+    success_url = reverse_lazy('list_category')
 
 class CategoryDeleteView(DeleteView):
     model = Category
     template_name = "confirm_delete_category.html"
-    success_url = reverse_lazy('list_category')  # Исправлено (было 'list_categories')
+    success_url = reverse_lazy('list_category')
 
-class CategoryDetailInfoView(DetailView):  # Добавлен недостающий класс
+class CategoryDetailInfoView(DetailView):
     model = Category
     template_name = 'description_category.html'
     context_object_name = 'category'
 
-class CategoryListView(ListView):  # Добавлен недостающий класс
+class CategoryListView(ListView):
     model = Category
     template_name = 'list_category.html'
     context_object_name = 'categories'
+
+    def get_queryset(self):
+        # ОБЪЕДИНЯЕМ ОБА МЕТОДА В ОДИН
+        queryset = Category.objects.order_by('name')
+        search_field = self.request.GET.get('q')
+        if search_field:
+            queryset = queryset.filter(Q(name__icontains=search_field))
+        return queryset
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Список категорий'
+        context['search_query'] = self.request.GET.get('q', '')  # ДОБАВЛЯЕМ ДЛЯ ПОИСКА
         return context
+

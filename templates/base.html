@@ -6,17 +6,39 @@
 </head>
 <body>
     <header>
-        <h1><a href="{% url 'index' %}">Мой магазин</a></h1>  <!-- Добавлен текст -->
+        <h1><a href="{% url 'index' %}">Мой магазин</a></h1>
+
         <nav>
-            <a href="{% url 'create_category' %}">+ Создать категорию</a>
+            <a href="{% url 'index' %}">Главная</a>
             <a href="{% url 'list_category' %}">Список категорий</a>
+            <a href="{% url 'create_category' %}">+ Создать категорию</a>
             <a href="{% url 'create_product' %}">+ Создать товар</a>
         </nav>
         <hr>
+
+        <!-- ФОРМА ПОИСКА -->
+        <form action="{% url 'list_category' %}" method="get">
+            <input type="text" name="q" placeholder="Поиск категорий..." value="{{ search_query|default:'' }}"/>
+            <input type="submit" value="Найти"/>
+            {% if search_query %}
+                <a href="{% url 'list_category' %}">Сбросить</a>
+            {% endif %}
+        </form>
+        
+        <!-- ОТОБРАЖАЕМ РЕЗУЛЬТАТЫ ПОИСКА ТОЛЬКО НА СТРАНИЦЕ СПИСКА КАТЕГОРИЙ -->
+        {% if request.resolver_match.url_name == 'list_category' %}
+            {% if search_query and categories %}
+                <p>Найдено категорий: {{ categories|length }}</p>
+            {% elif search_query and categories|length == 0 %}
+                <p>Категории по запросу "{{ search_query }}" не найдены</p>
+            {% endif %}
+        {% endif %}
     </header>
     <main>
         {% block content %}{% endblock %}
     </main>
-    <footer><hr></footer>
+    <footer>
+        <hr>
+    </footer>
 </body>
 </html>
