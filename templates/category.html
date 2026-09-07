@@ -3,8 +3,9 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block content %}
-    <h2>Категория: {{ category.name }}</h2>
+    <h2>Категория: {{ category.name }}</h2>  <!-- ИСПРАВЛЕНО: добавлена переменная category -->
     <a href="{% url 'index' %}">← На главную</a>
+    <a href="{% url 'list_category' %}">← Список категорий</a>
     <ul>
         {% for product in products %}
             <li>{{ product.name }} — {{ product.price }} ₽</li>

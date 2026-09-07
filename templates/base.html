@@ -6,9 +6,10 @@
 </head>
 <body>
     <header>
-        <h1><a href="{% url 'index' %}"> </a></h1>
+        <h1><a href="{% url 'index' %}">Мой магазин</a></h1>  <!-- ИСПРАВЛЕНО: добавлен текст -->
         <nav>
             <a href="{% url 'create_category' %}">+ Создать категорию</a>
+            <a href="{% url 'list_category' %}">Список категорий</a>  <!-- ИСПРАВЛЕНО: добавлена ссылка -->
         </nav>
         <hr>
     </header>

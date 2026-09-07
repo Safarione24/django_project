@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
 
-{% block title %} Подтверждение удаления {% endblock %}
+{% block title %}Подтверждение удаления{% endblock %}
 
 {% block content %}
     <form action="" method="post">
         {% csrf_token %}
         <p>Вы действительно подтверждаете удаление?</p>
         <input type="submit" value="Да"/>
-        <a href="{% url 'list_category'}"></a>
+        <a href="{% url 'list_category' %}">Нет, вернуться назад</a>  <!-- ИСПРАВЛЕНО: добавлен правильный URL и закрыта скобка -->
     </form>
+{% endblock %}  <!-- ИСПРАВЛЕНО: добавлен endblock -->

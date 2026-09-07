@@ -2,14 +2,13 @@
 {% load django_bootstrap5 %}
 
 {% block title %} 
-ПОдробнее 
+Подробнее о категории
 {% endblock %}
 
 {% block content %}
-
-<div >
-        <h1>{{ category.name }}</h1>
-        <p>{{ category.descriprion }}</p>
+<div>
+    <h1>{{ category.name }}</h1>
+    <p>{{ category.description }}</p>  <!-- ИСПРАВЛЕНО: было 'descriprion' -->
+    <a href="{% url 'list_category' %}">← Назад к списку</a>
 </div>
-
 {% endblock %}
