@@ -45,26 +45,23 @@ class ProductDetailView(DetailView):
     context_object_name = 'product'      
     pk_url_kwarg = 'product_id'           
 
-# ИСПРАВЛЕНО: имя класса было CategoryUpdatelView (опечатка)
-class CategoryUpdateView(UpdateView):
+class CategoryUpdateView(UpdateView):  # Исправлено имя класса (было CategoryUpdatelView)
     model = Category
     form_class = CategoryForm
-    template_name = 'create_category.html'  # ИСПРАВЛЕНО: было 'category_category.html'
-    success_url = reverse_lazy('list_category')  # ИСПРАВЛЕНО: было 'list_categories'
+    template_name = 'create_category.html'  # Исправлено (было 'category_category.html')
+    success_url = reverse_lazy('list_category')  # Исправлено (было 'list_categories')
 
 class CategoryDeleteView(DeleteView):
     model = Category
     template_name = "confirm_delete_category.html"
-    success_url = reverse_lazy('list_category')  # ИСПРАВЛЕНО: было 'list_categories'
+    success_url = reverse_lazy('list_category')  # Исправлено (было 'list_categories')
 
-# ИСПРАВЛЕНО: добавлен недостающий класс для детального просмотра категории
-class CategoryDetailInfoView(DetailView):
+class CategoryDetailInfoView(DetailView):  # Добавлен недостающий класс
     model = Category
     template_name = 'description_category.html'
     context_object_name = 'category'
 
-# ИСПРАВЛЕНО: добавлен недостающий класс для списка категорий
-class CategoryListView(ListView):
+class CategoryListView(ListView):  # Добавлен недостающий класс
     model = Category
     template_name = 'list_category.html'
     context_object_name = 'categories'

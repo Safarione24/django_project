@@ -6,7 +6,7 @@
     <h2>Список категорий</h2>
     <a href="{% url 'index' %}">← На главную</a>
     <ul>
-        {% for category in categories %}  <!-- ИСПРАВЛЕНО: цикл по категориям -->
+        {% for category in categories %}
             <li>
                 {{ category.name }}
                 <div>

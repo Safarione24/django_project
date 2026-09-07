@@ -1,10 +1,10 @@
 from django import forms
-from .models import Category, Product  # ИСПРАВЛЕНО: объединены импорты
+from .models import Category, Product
 
 class CategoryForm(forms.ModelForm):
     class Meta:
         model = Category
-        fields = ['name', 'description']  # ИСПРАВЛЕНО: добавлено description
+        fields = ['name', 'description']  # Добавлено description
 
 class ProductForm(forms.ModelForm):
     class Meta:

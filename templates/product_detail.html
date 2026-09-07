@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ product.name }}{% endblock %}
+
+{% block content %}
+    <h2>{{ product.name }}</h2>
+    <p>Цена: {{ product.price }} ₽</p>
+    <p>Описание: {{ product.description }}</p>
+    <p>Категория: <a href="{% url 'category_detail' product.category.id %}">{{ product.category.name }}</a></p>
+    <a href="{% url 'index' %}">← На главную</a>
+{% endblock %}
