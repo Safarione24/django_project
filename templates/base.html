@@ -16,21 +16,33 @@
         </nav>
         <hr>
 
-        <!-- ФОРМА ПОИСКА -->
+        <!-- ФОРМА ПОИСКА ТОЛЬКО С ВЫПАДАЮЩИМ СПИСКОМ -->
         <form action="{% url 'list_category' %}" method="get">
-            <input type="text" name="q" placeholder="Поиск категорий..." value="{{ search_query|default:'' }}"/>
-            <input type="submit" value="Найти"/>
-            {% if search_query %}
+            <label>Фильтр по категории:</label>
+            <select name="category_filter">
+                <option value="">Все категории</option>
+                {% for category in all_categories %}
+                    <option value="{{ category.id }}" {% if category_filter == category.id|stringformat:"s" %}selected{% endif %}>
+                        {{ category.name }}
+                    </option>
+                {% endfor %}
+            </select>
+            
+            <input type="submit" value="Показать"/>
+            
+            {% if category_filter %}
                 <a href="{% url 'list_category' %}">Сбросить</a>
             {% endif %}
         </form>
         
-        <!-- ОТОБРАЖАЕМ РЕЗУЛЬТАТЫ ПОИСКА ТОЛЬКО НА СТРАНИЦЕ СПИСКА КАТЕГОРИЙ -->
+        <!-- ОТОБРАЖАЕМ РЕЗУЛЬТАТЫ -->
         {% if request.resolver_match.url_name == 'list_category' %}
-            {% if search_query and categories %}
-                <p>Найдено категорий: {{ categories|length }}</p>
-            {% elif search_query and categories|length == 0 %}
-                <p>Категории по запросу "{{ search_query }}" не найдены</p>
+            {% if category_filter %}
+                {% if categories %}
+                    <p>Найдено категорий: {{ categories|length }}</p>
+                {% else %}
+                    <p>Категории не найдены</p>
+                {% endif %}
             {% endif %}
         {% endif %}
     </header>
@@ -39,6 +51,7 @@
     </main>
     <footer>
         <hr>
+        <p>&copy; 2026 Мой магазин</p>
     </footer>
 </body>
 </html>

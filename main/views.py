@@ -1,6 +1,6 @@
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
-from django.db.models import Q  # ДОБАВЛЕН ИМПОРТ Q
+from django.db.models import Q
 from .models import Category, Product
 from .forms import CategoryForm, ProductForm 
 
@@ -68,16 +68,22 @@ class CategoryListView(ListView):
     context_object_name = 'categories'
 
     def get_queryset(self):
-        # ОБЪЕДИНЯЕМ ОБА МЕТОДА В ОДИН
         queryset = Category.objects.order_by('name')
+        
         search_field = self.request.GET.get('q')
         if search_field:
             queryset = queryset.filter(Q(name__icontains=search_field))
+        
+        category_filter = self.request.GET.get('category_filter')
+        if category_filter and category_filter.isdigit():
+            queryset = queryset.filter(id=category_filter)
+        
         return queryset
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Список категорий'
-        context['search_query'] = self.request.GET.get('q', '')  # ДОБАВЛЯЕМ ДЛЯ ПОИСКА
+        context['search_query'] = self.request.GET.get('q', '')
+        context['category_filter'] = self.request.GET.get('category_filter', '')
+        context['all_categories'] = Category.objects.all().order_by('name')  # Для выпадающего списка
         return context
-
