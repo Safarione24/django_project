@@ -6,10 +6,18 @@
     <h2>Категория: {{ category.name }}</h2>
     <a href="{% url 'index' %}">← На главную</a>
     <ul>
+
+        <div>
+            <a href="{% url 'detail_category' category.pk}">Подробнее</a>
+            <a href="{% url 'update_category' category.pk}">Обновить</a>
+            <a href="{% url 'delete_category' category.pk}">Удалить</a>
+        </div>
         {% for product in products %}
             <li>{{ product.name }} — {{ product.price }} ₽</li>
         {% empty %}
+
             <li>Товаров в этой категории нет</li>
         {% endfor %}
+
     </ul>
 {% endblock %}
