@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Главная{% endblock %}
+
+{% block content %}
+    <h1>Добро пожаловать на главную страницу!</h1>
+    {% if user.is_authenticated %}
+        <p>Вы вошли как: <strong>{{ user.get_full_name|default:user.username }}</strong></p>
+        <p>Email: {{ user.email }}</p>
+        <p><a href="{% url 'logout' %}">Выйти</a></p>
+    {% else %}
+        <p>Пожалуйста, <a href="{% url 'login' %}">войдите</a> или <a href="{% url 'register' %}">зарегистрируйтесь</a>.</p>
+    {% endif %}
+{% endblock %}
