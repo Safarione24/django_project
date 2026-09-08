@@ -1,57 +1,24 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Мой сайт{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
 </head>
 <body>
-    <header>
-        <h1><a href="{% url 'index' %}">Мой магазин</a></h1>
-
-        <nav>
-            <a href="{% url 'index' %}">Главная</a>
-            <a href="{% url 'list_category' %}">Список категорий</a>
-            <a href="{% url 'create_category' %}">+ Создать категорию</a>
-            <a href="{% url 'create_product' %}">+ Создать товар</a>
-        </nav>
-        <hr>
-
-        <!-- ФОРМА ПОИСКА ТОЛЬКО С ВЫПАДАЮЩИМ СПИСКОМ -->
-        <form action="{% url 'list_category' %}" method="get">
-            <label>Фильтр по категории:</label>
-            <select name="category_filter">
-                <option value="">Все категории</option>
-                {% for category in all_categories %}
-                    <option value="{{ category.id }}" {% if category_filter == category.id|stringformat:"s" %}selected{% endif %}>
-                        {{ category.name }}
-                    </option>
-                {% endfor %}
-            </select>
-            
-            <input type="submit" value="Показать"/>
-            
-            {% if category_filter %}
-                <a href="{% url 'list_category' %}">Сбросить</a>
-            {% endif %}
-        </form>
-        
-        <!-- ОТОБРАЖАЕМ РЕЗУЛЬТАТЫ -->
-        {% if request.resolver_match.url_name == 'list_category' %}
-            {% if category_filter %}
-                {% if categories %}
-                    <p>Найдено категорий: {{ categories|length }}</p>
-                {% else %}
-                    <p>Категории не найдены</p>
-                {% endif %}
-            {% endif %}
-        {% endif %}
-    </header>
-    <main>
-        {% block content %}{% endblock %}
-    </main>
-    <footer>
-        <hr>
-        <p>&copy; 2026 Мой магазин</p>
-    </footer>
+    
 </body>
 </html>
+
+
+{% if user.is_authenticated %}
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Выход</button>
+</form>
+
+{% else %}
+    <a href="">Регистрация</a>
+    <a href="">Вход</a>
+{% endif %}
